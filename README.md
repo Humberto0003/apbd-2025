@@ -13,12 +13,36 @@ Criar o banco de dados Olist, importar os datasets, configurar integridade, gera
 
 ## 🗂 Estrutura planejada
 
-modelo/ -> DER e documentação de modelagem
-ddl/ -> Scripts CREATE TABLE e constraints
-dml/ -> Carga e limpeza dos dados
-dcl/ -> Usuários e permissões
-dql/ -> Consultas analíticas (5.1 até 5.9)
-otimizacao/ -> Índices, EXPLAIN ANALYZE e materialized views
-auditoria/ -> Triggers e logs de auditoria
-backup/ -> Estratégias e scripts de backup
-docs/ -> Relatório final e evidências
+modelo/                     
+│── → DER e documentação de modelagem
+
+ddl/                        
+│── → Scripts CREATE TABLE, PK, UNIQUE e constraints
+
+dml/                        
+│── → Carga dos CSVs, limpeza e ajustes pós-carga
+    └── carga/ → scripts de importação
+
+dcl/                        
+│── → Usuários e permissões (ex: usuário BI)
+
+dql/                        
+│── → Consultas analíticas (Módulo 3)
+    └── consultas/ → consultas 5.1 a 5.9
+
+otimizacao/                 
+│── → Índices, EXPLAIN ANALYZE, ajustes de performance
+    ├── explain_antes/
+    └── explain_depois/
+
+auditoria/                  
+│── → Tabelas e triggers de auditoria
+
+backup/                     
+│── → Estratégias e scripts de backup
+    └── scripts_backup/
+
+docs/                       
+│── → Relatório final e documentação
+    └── evidencias/ → prints e resultados
+
