@@ -24,11 +24,11 @@ dml/
     └── carga/ → scripts de importação
 
 dcl/                        
-│── → Usuários e permissões (ex: usuário BI)
+│── → Usuários e permissões
 
 dql/                        
-│── → Consultas analíticas (Módulo 3)
-    └── consultas/ → consultas 5.1 a 5.9
+│── → Consultas analíticas
+    └── consultas/ → consultas
 
 otimizacao/                 
 │── → Índices, EXPLAIN ANALYZE, ajustes de performance
