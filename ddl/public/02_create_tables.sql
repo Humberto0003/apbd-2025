@@ -102,3 +102,10 @@ CREATE TABLE order_reviews (
     review_answer_timestamp TIMESTAMP
  
 );
+
+-- TABELA: product_category_name_translation
+CREATE TABLE product_category_name_translation (
+    product_category_name VARCHAR(100) PRIMARY KEY,
+    product_category_name_english VARCHAR(150)
+);
+-- FIM DO ARQUIVO
