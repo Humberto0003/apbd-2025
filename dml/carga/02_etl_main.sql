@@ -47,7 +47,7 @@ WITH dedup AS (
         customer_city,
         customer_state,
         ROW_NUMBER() OVER (
-            PARTITION BY customer_id
+            PARTITION BY customer_id 
             ORDER BY customer_unique_id
         ) AS rn
     FROM staging.order_customer
@@ -55,9 +55,14 @@ WITH dedup AS (
 SELECT
     customer_id,
     customer_unique_id,
-    zip_code_prefix,
-    initcap(translate(regexp_replace(customer_city, '[^\x20-\x7EÀ-ÿ ]', '', 'g'),
-        'ÁÀÃÂáàãâÉÈÊéèêÍÌíìÓÒÕÔóòõôÚÙÜúùüÇç','AAAAaaaaEEEeeeIIiiOOOOooooUUUuuuCc')),
+    LPAD(zip_code_prefix, 5, '0'),
+    initcap(
+        translate(
+            convert_from(convert_to(customer_city, 'LATIN1'), 'UTF8'),
+            'ÁÀÃÂáàãâÉÈÊéèêÍÌíìÓÒÕÔóòõôÚÙÜúùüÇç',
+            'AAAAaaaaEEEeeeIIiiOOOOooooUUUuuuCc'
+        )
+    ),
     upper(customer_state)
 FROM dedup
 WHERE rn = 1;
@@ -185,16 +190,21 @@ WITH dedup AS (
         seller_city,
         seller_state,
         ROW_NUMBER() OVER (
-            PARTITION BY seller_id
+            PARTITION BY seller_id 
             ORDER BY zip_code_prefix
         ) AS rn
     FROM staging.order_sellers
 )
 SELECT
     seller_id,
-    zip_code_prefix,
-    initcap(translate(regexp_replace(seller_city, '[^\x20-\x7EÀ-ÿ ]', '', 'g'),
-        'ÁÀÃÂáàãâÉÈÊéèêÍÌíìÓÒÕÔóòõôÚÙÜúùüÇç','AAAAaaaaEEEeeeIIiiOOOOooooUUUuuuCc')),
+    LPAD(zip_code_prefix, 5, '0'),
+    initcap(
+        translate(
+            regexp_replace(seller_city, '[^\x20-\x7EÀ-ÿ ]', '', 'g'),
+            'ÁÀÃÂáàãâÉÈÊéèêÍÌíìÓÒÕÔóòõôÚÙÜúùüÇç',
+            'AAAAaaaaEEEeeeIIiiOOOOooooUUUuuuCc'
+        )
+    ),
     upper(seller_state)
 FROM dedup
 WHERE rn = 1;
