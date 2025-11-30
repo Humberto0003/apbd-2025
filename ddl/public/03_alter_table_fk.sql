@@ -1,4 +1,4 @@
--- 1. LIMPEZA DE DADOS PROBLEMÁTICOS ANTES DAS FKs
+-- 1. (*Pode entrar no DML) LIMPEZA DE DADOS PROBLEMÁTICOS ANTES DAS FKs
 DELETE FROM order_customer
 WHERE zip_code_prefix NOT IN (
     SELECT geolocation_zip_code_prefix FROM geolocation
