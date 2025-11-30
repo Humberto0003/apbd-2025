@@ -28,7 +28,7 @@ CREATE TABLE staging.orders (
     order_aproved_at TEXT,
     order_delivered_carrier_date TEXT,
     order_delivered_customer_date TEXT,
-    order_estimated_delivery_date TEXT
+	order_estimated_delivery_date TEXT
 );
 
 -- 4. STAGING: products
@@ -86,4 +86,11 @@ CREATE TABLE staging.order_reviews (
     review_comment_message TEXT,
     review_create_date TEXT,
     review_answer_timestamp TEXT
+);
+
+-- 9. STAGING: product_category_name_translation
+
+CREATE TABLE staging.product_category_name_translation (
+    product_category_name TEXT,
+    product_category_name_english TEXT
 );
