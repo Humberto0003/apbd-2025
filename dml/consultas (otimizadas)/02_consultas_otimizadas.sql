@@ -85,25 +85,4 @@ ORDER BY media_avaliacao DESC;
 
 -- Consulta 4: (otimizada)
 
-
-CREATE INDEX idx_order_customer_customer_id ON order_customer(customer_id);
-
-SELECT 
-    o.order_id,
-    o.order_purchase_timestamp,
-    o.order_status,
-    oc.customer_unique_id,
-    SUM(oi.price + oi.freight_value) AS total_pago
-FROM orders o
-JOIN order_customer oc 
-    ON o.customer_id = oc.customer_id
-JOIN order_items oi
-    ON o.order_id = oi.order_id
-WHERE o.order_purchase_timestamp 
-      BETWEEN '2017-01-01' AND '2017-12-31'
-GROUP BY 
-    o.order_id,
-    o.order_purchase_timestamp,
-    o.order_status,
-    oc.customer_unique_id
-ORDER BY o.order_purchase_timestamp;
+-- Não foi necessário.
