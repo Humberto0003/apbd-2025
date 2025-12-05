@@ -113,3 +113,18 @@ ORDER BY quantidade_vendida DESC
 LIMIT 5;
 
 -- Consulta 6: (otimizada)
+SELECT
+    o.order_id,
+    o.order_purchase_timestamp,
+    o.order_delivered_customer_date,
+    o.order_estimated_delivery_date,
+    (o.order_delivered_customer_date - o.order_estimated_delivery_date) AS atraso
+FROM orders o
+WHERE 
+    o.order_purchase_timestamp >= DATE '2018-01-01'
+    AND o.order_purchase_timestamp <  DATE '2018-02-01'
+    AND o.order_delivered_customer_date > o.order_estimated_delivery_date
+ORDER BY atraso DESC
+LIMIT 10;
+
+-- Consulta 7: (otimizada)
