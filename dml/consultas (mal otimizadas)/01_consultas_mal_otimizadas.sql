@@ -66,6 +66,22 @@ GROUP BY oi.product_id
 ORDER BY quantidade_vendida DESC
 LIMIT 5;
 
+-- Consulta 6: (Mal otimizada)
+SELECT
+    o.order_id,
+    o.order_purchase_timestamp,
+    o.order_delivered_customer_date,
+    o.order_estimated_delivery_date,
+    (o.order_delivered_customer_date - o.order_estimated_delivery_date) AS atraso
+FROM orders o
+WHERE 
+    o.order_delivered_customer_date IS NOT NULL
+    AND o.order_estimated_delivery_date IS NOT NULL
+    AND o.order_purchase_timestamp BETWEEN '2018-01-01' AND '2018-01-31'
+    AND (o.order_delivered_customer_date > o.order_estimated_delivery_date)
+ORDER BY atraso DESC
+LIMIT 10;
+
 
 
 
