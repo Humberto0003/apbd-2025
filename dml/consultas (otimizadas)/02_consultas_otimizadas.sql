@@ -142,3 +142,48 @@ LIMIT 10;
 
 -- Consulta 8: (otimizada)
 
+SELECT
+    oc.customer_state,
+    AVG(o.order_delivered_customer_date - o.order_delivered_carrier_date) AS tempo_medio_entrega
+FROM orders o
+JOIN order_customer oc
+    ON oc.customer_id = o.customer_id
+WHERE 
+    o.order_delivered_customer_date > o.order_delivered_carrier_date
+GROUP BY oc.customer_state
+ORDER BY tempo_medio_entrega DESC;
+
+-- Consulta 9: (otimizada)
+
+-- Função de Harvesine
+CREATE FUNCTION haversine_km(
+    lat1 DOUBLE PRECISION,
+    lon1 DOUBLE PRECISION,
+    lat2 DOUBLE PRECISION,
+    lon2 DOUBLE PRECISION
+)
+RETURNS DOUBLE PRECISION AS $$
+BEGIN
+    RETURN 6371 * acos(
+        cos(radians(lat1)) 
+        * cos(radians(lat2)) 
+        * cos(radians(lon2 - lon1))
+        + sin(radians(lat1)) 
+        * sin(radians(lat2))
+    );
+END;
+$$ LANGUAGE plpgsql IMMUTABLE;
+--
+SELECT
+    s.seller_id,
+    s.seller_city,
+    s.seller_state,
+    g.geolocation_lat AS lat_seller,
+    g.geolocation_lng AS lon_seller,
+    haversine_km(-23.5505, -46.6333, g.geolocation_lat, g.geolocation_lng) AS distancia_km
+FROM order_sellers s
+JOIN geolocation g
+    ON s.zip_code_prefix = g.geolocation_zip_code_prefix
+WHERE 
+    haversine_km(-23.5505, -46.6333, g.geolocation_lat, g.geolocation_lng) <= 50
+ORDER BY distancia_km;
