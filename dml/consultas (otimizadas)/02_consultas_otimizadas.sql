@@ -99,4 +99,17 @@ WHERE
     AND o.order_purchase_timestamp <  :fim;
 
 -- Consulta 5: (otimizada)
+SELECT 
+    oi.product_id,
+    COUNT(*) AS quantidade_vendida
+FROM order_items oi
+JOIN orders o 
+    ON oi.order_id = o.order_id
+WHERE 
+    o.order_purchase_timestamp >= :inicio
+    AND o.order_purchase_timestamp <  :fim
+GROUP BY oi.product_id
+ORDER BY quantidade_vendida DESC
+LIMIT 5;
 
+-- Consulta 6: (otimizada)
