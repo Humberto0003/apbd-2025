@@ -128,3 +128,17 @@ ORDER BY atraso DESC
 LIMIT 10;
 
 -- Consulta 7: (otimizada)
+SELECT 
+    oc.customer_unique_id,
+    SUM(op.payment_value) AS total_gasto
+FROM order_payments op
+JOIN orders o 
+    ON op.order_id = o.order_id
+JOIN order_customer oc
+    ON o.customer_id = oc.customer_id
+GROUP BY oc.customer_unique_id
+ORDER BY total_gasto DESC
+LIMIT 10;
+
+-- Consulta 8: (otimizada)
+
