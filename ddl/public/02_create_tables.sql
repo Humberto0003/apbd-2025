@@ -1,5 +1,5 @@
 
--- TABELA: geolocation
+-- TABELA 1: geolocation
 
 CREATE TABLE geolocation (
     geolocation_zip_code_prefix VARCHAR(10) PRIMARY KEY,
@@ -10,7 +10,7 @@ CREATE TABLE geolocation (
 );
 
 
--- TABELA: order_customer
+-- TABELA 2: order_customer
 
 CREATE TABLE order_customer (
     customer_id CHAR(32) PRIMARY KEY,
@@ -22,7 +22,7 @@ CREATE TABLE order_customer (
 );
 
 
--- TABELA: orders
+-- TABELA 3: orders
 
 CREATE TABLE orders (
     order_id CHAR(32) PRIMARY KEY,
@@ -37,7 +37,7 @@ CREATE TABLE orders (
 );
 
 
--- TABELA: products
+-- TABELA 4: products
 
 CREATE TABLE products (
     product_id CHAR(32) PRIMARY KEY,
@@ -52,7 +52,7 @@ CREATE TABLE products (
 );
 
 
--- TABELA: order_sellers
+-- TABELA 5: order_sellers
 
 CREATE TABLE order_sellers (
     seller_id CHAR(32) PRIMARY KEY,
@@ -63,7 +63,7 @@ CREATE TABLE order_sellers (
 );
 
 
--- TABELA: order_items
+-- TABELA 6: order_items
 
 CREATE TABLE order_items (
     order_id CHAR(32),
@@ -78,7 +78,7 @@ CREATE TABLE order_items (
 );
 
 
--- TABELA: order_payments
+-- TABELA 7: order_payments
 
 CREATE TABLE order_payments (
     order_id CHAR(32),
@@ -91,7 +91,7 @@ CREATE TABLE order_payments (
 );
 
 
--- TABELA: order_reviews
+-- TABELA 8: order_reviews
 
 CREATE TABLE order_reviews (
     review_id CHAR(32) PRIMARY KEY,
@@ -104,9 +104,8 @@ CREATE TABLE order_reviews (
  
 );
 
--- TABELA: product_category_name_translation
+-- TABELA 9: product_category_name_translation
 CREATE TABLE product_category_name_translation (
     product_category_name VARCHAR(100) PRIMARY KEY,
     product_category_name_english VARCHAR(150)
 );
--- FIM DO ARQUIVO
