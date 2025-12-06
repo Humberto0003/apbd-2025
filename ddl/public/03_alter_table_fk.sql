@@ -1,28 +1,4 @@
--- 1. (*Pode entrar no DML) LIMPEZA DE DADOS PROBLEMÁTICOS ANTES DAS FKs
-DELETE FROM order_customer
-WHERE zip_code_prefix NOT IN (
-    SELECT geolocation_zip_code_prefix FROM geolocation
-);
-
-DELETE FROM orders
-WHERE customer_id NOT IN (
-    SELECT customer_id FROM order_customer
-);
-
-DELETE FROM order_items
-WHERE order_id NOT IN (SELECT order_id FROM orders)
-   OR product_id NOT IN (SELECT product_id FROM products)
-   OR seller_id NOT IN (SELECT seller_id FROM order_sellers);
-
-DELETE FROM order_reviews
-WHERE order_id NOT IN (SELECT order_id FROM orders);
-
-DELETE FROM order_payments
-WHERE order_id NOT IN (SELECT order_id FROM orders);
-
-
-
--- 2. Criando indices unicos
+-- 1. Criando indices unicos
 
 CREATE INDEX idx_orders_customer_id
 ON orders (customer_id);
@@ -43,7 +19,7 @@ CREATE INDEX idx_reviews_order_id
 ON order_reviews (order_id);
 
 
--- 3. Resgrigindo valores negativos
+-- 2. Resgrigindo valores negativos
 ALTER TABLE products
 ADD CONSTRAINT chk_product_weight_non_negative
 CHECK (product_weight_g >= 0);
@@ -60,7 +36,7 @@ ALTER TABLE order_payments
 ADD CONSTRAINT chk_payment_value_non_negative
 CHECK (payment_value >= 0);
 
--- 4. Adicionando as FKs nas tabelas
+-- 3. Adicionando as FKs nas tabelas
 -- order_customer -> gelocation
 ALTER TABLE order_customer
 ADD CONSTRAINT fk_order_customer_zip
